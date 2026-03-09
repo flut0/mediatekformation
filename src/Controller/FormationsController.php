@@ -10,54 +10,74 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Controleur des formations
- *
  * @author emds
  */
 class FormationsController extends AbstractController {
 
     /**
-     * 
      * @var FormationRepository
      */
     private $formationRepository;
     
     /**
-     * 
      * @var CategorieRepository
      */
     private $categorieRepository;
+
+    /**
+     * Page des formations
+     */
+    private const PAGE_FORMATIONS = "pages/formations.html.twig";
     
     function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository) {
         $this->formationRepository = $formationRepository;
-        $this->categorieRepository= $categorieRepository;
+        $this->categorieRepository = $categorieRepository;
     }
     
+    /**
+     * Affiche la liste de toutes les formations
+     * @return Response
+     */
     #[Route('/formations', name: 'formations')]
-    public function index(): Response{
+    public function index(): Response {
         $formations = $this->formationRepository->findAll();
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::PAGE_FORMATIONS, [
             'formations' => $formations,
             'categories' => $categories
         ]);
     }
 
+    /**
+     * Trie les formations sur un champ
+     * @param string $champ champ sur lequel trier
+     * @param string $ordre ordre de tri (ASC ou DESC)
+     * @param string $table table liée si le champ est dans une autre table
+     * @return Response
+     */
     #[Route('/formations/tri/{champ}/{ordre}/{table}', name: 'formations.sort')]
-    public function sort($champ, $ordre, $table=""): Response{
+    public function sort($champ, $ordre, $table=""): Response {
         $formations = $this->formationRepository->findAllOrderBy($champ, $ordre, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::PAGE_FORMATIONS, [
             'formations' => $formations,
             'categories' => $categories
         ]);
     }     
 
+    /**
+     * Recherche les formations dont un champ contient une valeur
+     * @param string $champ champ sur lequel rechercher
+     * @param Request $request requête HTTP
+     * @param string $table table liée si le champ est dans une autre table
+     * @return Response
+     */
     #[Route('/formations/recherche/{champ}/{table}', name: 'formations.findallcontain')]
-    public function findAllContain($champ, Request $request, $table=""): Response{
+    public function findAllContain($champ, Request $request, $table=""): Response {
         $valeur = $request->get("recherche");
         $formations = $this->formationRepository->findByContainValue($champ, $valeur, $table);
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/formations.html.twig", [
+        return $this->render(self::PAGE_FORMATIONS, [
             'formations' => $formations,
             'categories' => $categories,
             'valeur' => $valeur,
@@ -65,12 +85,16 @@ class FormationsController extends AbstractController {
         ]);
     }  
 
+    /**
+     * Affiche le détail d'une formation
+     * @param int $id identifiant de la formation
+     * @return Response
+     */
     #[Route('/formations/formation/{id}', name: 'formations.showone')]
-    public function showOne($id): Response{
+    public function showOne($id): Response {
         $formation = $this->formationRepository->find($id);
         return $this->render("pages/formation.html.twig", [
             'formation' => $formation
         ]);        
     }   
-    
 }

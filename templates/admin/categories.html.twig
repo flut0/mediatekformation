@@ -1,0 +1,47 @@
+{% extends "admin/base.html.twig" %}
+{% block body %}
+    <div class="container mt-3">
+        <h2 class="text-info">Gestion des catégories</h2>
+        
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" class="mb-4">
+            <input type="hidden" name="_token" value="{{ csrf_token('categorie_form') }}">
+            <div class="input-group" style="max-width: 400px;">
+                <input type="text" class="form-control" name="name" placeholder="Nom de la catégorie" required>
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+
+        <table class="table table-striped" summary="Liste des catégories">
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th class="text-center" scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categorie in categories %}
+                    <tr>
+                        <td>{{ categorie.name }}</td>
+                        <td class="text-center">
+                            {% if categorie.formations|length == 0 %}
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="if(confirm('Supprimer cette catégorie ?')) window.location='{{ path('admin.categories.supprimer', {id:categorie.id}) }}'">
+                                    Supprimer
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-danger btn-sm" disabled 
+                                        title="Impossible de supprimer une catégorie rattachée à des formations">
+                                    Supprimer
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository des playlists
  * @extends ServiceEntityRepository<Playlist>
  */
 class PlaylistRepository extends ServiceEntityRepository
@@ -16,12 +17,20 @@ class PlaylistRepository extends ServiceEntityRepository
         parent::__construct($registry, Playlist::class);
     }
 
+    /**
+     * Ajoute ou modifie une playlist
+     * @param Playlist $entity
+     */
     public function add(Playlist $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Supprime une playlist
+     * @param Playlist $entity
+     */
     public function remove(Playlist $entity): void
     {
         $this->getEntityManager()->remove($entity);
@@ -30,11 +39,10 @@ class PlaylistRepository extends ServiceEntityRepository
     
     /**
      * Retourne toutes les playlists triées sur le nom de la playlist
-     * @param type $champ
-     * @param type $ordre
+     * @param string $ordre ordre de tri (ASC ou DESC)
      * @return Playlist[]
      */
-    public function findAllOrderByName($ordre): array{
+    public function findAllOrderByName($ordre): array {
         return $this->createQueryBuilder('p')
                 ->leftjoin('p.formations', 'f')
                 ->groupBy('p.id')
@@ -44,14 +52,14 @@ class PlaylistRepository extends ServiceEntityRepository
     } 
 	
     /**
-     * Enregistrements dont un champ contient une valeur
-     * ou tous les enregistrements si la valeur est vide
-     * @param type $champ
-     * @param type $valeur
-     * @param type $table si $champ dans une autre table
+     * Retourne les playlists dont un champ contient une valeur
+     * ou toutes les playlists si la valeur est vide
+     * @param string $champ nom du champ
+     * @param string $valeur valeur recherchée
+     * @param string $table table liée si le champ est dans une autre table
      * @return Playlist[]
      */
-    public function findByContainValue($champ, $valeur, $table=""): array{
+    public function findByContainValue($champ, $valeur, $table=""): array {
         if($valeur==""){
             return $this->findAllOrderByName('ASC');
         }    
@@ -76,5 +84,18 @@ class PlaylistRepository extends ServiceEntityRepository
                     ->getResult();              
         }           
     }    
-    
+
+    /**
+     * Retourne toutes les playlists triées sur le nombre de formations
+     * @param string $ordre ordre de tri (ASC ou DESC)
+     * @return Playlist[]
+     */
+    public function findAllOrderByNbFormations($ordre): array {
+        return $this->createQueryBuilder('p')
+                ->leftjoin('p.formations', 'f')
+                ->groupBy('p.id')
+                ->orderBy('COUNT(f.id)', $ordre)
+                ->getQuery()
+                ->getResult();
+    }
 }

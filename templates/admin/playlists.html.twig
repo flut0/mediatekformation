@@ -1,0 +1,68 @@
+{% extends "admin/base.html.twig" %}
+{% block body %}
+    <div class="container mt-3">
+        <h2 class="text-info">Gestion des playlists</h2>
+        <a href="{{ path('admin.playlists.ajout') }}" class="btn btn-success mb-3">Ajouter une playlist</a>
+        <table class="table table-striped" summary="Liste des playlists">
+            <thead>
+                <tr>
+                    <th class="text-left align-top" scope="col">
+                        playlist<br />
+                        <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button"><</a>
+                        <a href="{{ path('admin.playlists.sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button">></a>
+                        <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'name'}) }}">
+                            <input type="text" class="sm" name="recherche"
+                                   value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                            <button type="submit" class="btn btn-info btn-sm">filtrer</button>
+                        </form>
+                    </th>
+                    <th class="text-left align-top" scope="col">
+                        catégories
+                        <form class="form-inline mt-1" method="POST" action="{{ path('admin.playlists.findallcontain', {champ:'id', table:'categories'}) }}">
+                            <select class="form-select form-select-sm" name="recherche" onchange="this.form.submit()">
+                                <option value=""></option>
+                                {% for categorie in categories %}
+                                    <option {% if valeur|default and valeur==categorie.id %}selected{% endif %}
+                                        value="{{ categorie.id }}">{{ categorie.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </th>
+                    <th class="text-left align-top" scope="col">
+                        nb formations<br />
+                        <a href="{{ path('admin.playlists.sort', {champ:'nbFormations', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button"><</a>
+                        <a href="{{ path('admin.playlists.sort', {champ:'nbFormations', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button">></a>
+                    </th>
+                    <th class="text-center align-top" scope="col">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for playlist in playlists %}
+                    <tr class="align-middle">
+                        <td><h5 class="text-info">{{ playlist.name }}</h5></td>
+                        <td>
+                            {% for categorie in playlist.categoriesplaylist %}
+                                {{ categorie }}<br />
+                            {% endfor %}
+                        </td>
+                        <td class="text-center">{{ playlist.formations|length }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('admin.playlists.modifier', {id:playlist.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+                            {% if playlist.formations|length == 0 %}
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="if(confirm('Supprimer cette playlist ?')) window.location='{{ path('admin.playlists.supprimer', {id:playlist.id}) }}'">
+                                    Supprimer
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-danger btn-sm" disabled title="Impossible de supprimer une playlist avec des formations">
+                                    Supprimer
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

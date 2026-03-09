@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Repository des catégories
  * @extends ServiceEntityRepository<Categorie>
  */
 class CategorieRepository extends ServiceEntityRepository
@@ -16,12 +17,20 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
 
+    /**
+     * Ajoute ou modifie une catégorie
+     * @param Categorie $entity
+     */
     public function add(Categorie $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Supprime une catégorie
+     * @param Categorie $entity
+     */
     public function remove(Categorie $entity): void
     {
         $this->getEntityManager()->remove($entity);
@@ -30,10 +39,10 @@ class CategorieRepository extends ServiceEntityRepository
     
     /**
      * Retourne la liste des catégories des formations d'une playlist
-     * @param type $idPlaylist
-     * @return array
+     * @param int $idPlaylist identifiant de la playlist
+     * @return Categorie[]
      */
-    public function findAllForOnePlaylist($idPlaylist): array{
+    public function findAllForOnePlaylist($idPlaylist): array {
         return $this->createQueryBuilder('c')
                 ->join('c.formations', 'f')
                 ->join('f.playlist', 'p')
@@ -43,5 +52,4 @@ class CategorieRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();        
     }  
-    
 }
