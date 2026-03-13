@@ -1,10 +1,11 @@
 # Mediatekformation
 ## Présentation
 Ce site, développé avec Symfony 6.4, permet d'accéder aux vidéos d'auto-formation proposées par une chaîne de médiathèques et qui sont aussi accessibles sur YouTube.<br> 
-Actuellement, seule la partie front office a été développée. Elle contient les fonctionnalités globales suivantes :<br>
+Actuellement, le front office et le back office ont été développés. Le front office contient les fonctionnalités globales suivantes :<br>
 ![img1](https://github.com/user-attachments/assets/9c5c503b-738d-40cf-ba53-36ba4c0209e8)
+
 ## Les différentes pages
-Voici les 5 pages correspondant aux différents cas d’utilisation.
+Voici les 5 pages correspondant aux différents cas d'utilisation.
 ### Page 1 : l'accueil
 Cette page présente le fonctionnement du site et les 2 dernières vidéos mises en ligne.<br>
 La partie du haut contient une bannière (logo, nom et phrase présentant le but du site) et le menu permettant d'accéder aux 3 pages principales (Accueil, Formations, Playlists).<br>
@@ -16,11 +17,11 @@ Le bas de page contient un lien pour accéder à la page des CGU : ce lien est p
 Cette page présente les formations proposées en ligne (accessibles sur YouTube).<br>
 La partie haute est identique à la page d'accueil (bannière et menu).<br>
 La partie centrale contient un tableau composé de 5 colonnes :<br>
-•	La 1ère colonne ("formation") contient le titre de chaque formation.<br>
-•	La 2ème colonne ("playlist") contient le nom de la playlist dans laquelle chaque formation se trouve.<br>
-•	La 3ème colonne ("catégories") contient la ou les catégories concernées par chaque formation (langage…).<br>
-•	La 4ème colonne ("date") contient la date de parution de chaque formation.<br>
-•	LA 5ème contient la capture visible sur YouTube, pour chaque formation.<br>
+- La 1ère colonne ("formation") contient le titre de chaque formation.<br>
+- La 2ème colonne ("playlist") contient le nom de la playlist dans laquelle chaque formation se trouve.<br>
+- La 3ème colonne ("catégories") contient la ou les catégories concernées par chaque formation (langage…).<br>
+- La 4ème colonne ("date") contient la date de parution de chaque formation.<br>
+- LA 5ème contient la capture visible sur YouTube, pour chaque formation.<br>
 Au niveau des colonnes "formation", "playlist" et "date", 2 boutons permettent de trier les lignes en ordre croissant ("<") ou décroissant (">").<br>
 Au niveau des colonnes "formation" et "playlist", il est possible de filtrer les lignes en tapant un texte : seuls les lignes qui contiennent ce texte sont affichées. Si la zone est vide, le fait de cliquer sur "filtrer" permet de retrouver la liste complète.<br> 
 Au niveau de la catégorie, la sélection d'une catégorie dans le combo permet d'afficher uniquement les formations qui ont cette catégorie. Le fait de sélectionner la ligne vide du combo permet d'afficher à nouveau toutes les formations.<br>
@@ -31,16 +32,16 @@ Le fait de cliquer sur une miniature permet d'accéder à la troisième page con
 Cette page n'est pas accessible par le menu mais uniquement en cliquant sur une miniature dans la page "Formations" ou une image dans la page "Accueil".<br>
 La partie haute est identique à la page d'accueil (bannière et menu).<br>
 La partie centrale est séparée en 2 parties :<br>
-•	La partie gauche contient la vidéo qui peut être directement visible dans le site ou sur YouTube.<br>
-•	La partie droite contient la date de parution, le titre de la formation, le nom de la playlist, la liste des catégories et sa description détaillée.<br>
+- La partie gauche contient la vidéo qui peut être directement visible dans le site ou sur YouTube.<br>
+- La partie droite contient la date de parution, le titre de la formation, le nom de la playlist, la liste des catégories et sa description détaillée.<br>
 ![img4](https://github.com/user-attachments/assets/f41d05d8-5980-4dc4-9eb7-58d1c31b8a25)
 ### Page 4 : les playlists
 Cette page présente les playlists.<br>
 La partie haute est identique à la page d'accueil (bannière et menu).<br>
 La partie centrale contient un tableau composé de 3 colonnes :<br>
-•	La 1ère colonne ("playlist") contient le nom de chaque playlist.<br>
-•	La 2ème colonne ("catégories") contient la ou les catégories concernées par chaque playlist (langage…).<br>
-•	La 3ème contient un bouton pour accéder à la page de présentation de la playlist.<br>
+- La 1ère colonne ("playlist") contient le nom de chaque playlist.<br>
+- La 2ème colonne ("catégories") contient la ou les catégories concernées par chaque playlist (langage…).<br>
+- La 3ème contient un bouton pour accéder à la page de présentation de la playlist.<br>
 Au niveau de la colonne "playlist", 2 boutons permettent de trier les lignes en ordre croissant ("<") ou décroissant (">"). Il est aussi possible de filtrer les lignes en tapant un texte : seuls les lignes qui contiennent ce texte sont affichées. Si la zone est vide, le fait de cliquer sur "filtrer" permet de retrouver la liste complète.<br> 
 Au niveau de la catégorie, la sélection d'une catégorie dans le combo permet d'afficher uniquement les playlists qui ont cette catégorie. Le fait de sélectionner la ligne vide du combo permet d'afficher à nouveau toutes les playlists.<br>
 Par défaut la liste est triée sur le nom de la playlist.<br>
@@ -50,9 +51,21 @@ Cliquer sur le bouton "voir détail" d'une playlist permet d'accéder à la page
 Cette page n'est pas accessible par le menu mais uniquement en cliquant sur un bouton "voir détail" dans la page "Playlists".<br>
 La partie haute est identique à la page d'accueil (bannière et menu).<br>
 La partie centrale est séparée en 2 parties :<br>
-•	La partie gauche contient les informations de la playlist (titre, liste des catégories, description).<br>
-•	La partie droite contient la liste des formations contenues dans la playlist (miniature et titre) avec possibilité de cliquer sur une formation pour aller dans la page de la formation.<br>
+- La partie gauche contient les informations de la playlist (titre, liste des catégories, description).<br>
+- La partie droite contient la liste des formations contenues dans la playlist (miniature et titre) avec possibilité de cliquer sur une formation pour aller dans la page de la formation.<br>
 ![img6](https://github.com/user-attachments/assets/f216a9e7-084a-4683-9b4e-cada5574a0e2)
+
+## Back office (administration)
+Le back office est accessible à l'adresse suivante : https://ilyesahouzi.alwaysdata.net/admin/formations<br>
+L'accès est sécurisé par une authentification (login/mot de passe).<br>
+Il permet de gérer les formations, les playlists et les catégories :<br>
+- **Formations** : affichage, tri, recherche, ajout, modification et suppression.<br>
+- **Playlists** : affichage, tri, recherche, ajout, modification et suppression (uniquement si elle ne contient pas de formations).<br>
+- **Catégories** : affichage, ajout et suppression (uniquement si elle n'est rattachée à aucune formation).<br>
+
+## Site en ligne
+Le site est accessible à l'adresse suivante : https://ilyesahouzi.alwaysdata.net
+
 ## La base de données
 La base de données exploitée par le site est au format MySQL.
 ### Schéma conceptuel de données
@@ -77,10 +90,20 @@ Remarques :
 Les clés primaires des entités sont en auto-incrémentation.<br>
 Le chemin des images (des 2 tailles) n'est pas mémorisé dans la BDD car il peut être fabriqué de la façon suivante :<br>
 "https://i.ytimg.com/vi/" suivi de, soit "/default.jpg" (pour la miniature), soit "/hqdefault.jpg" (pour l'image plus grande de la page d'accueil).
+
 ## Test de l'application en local
-- Vérifier que Composer, Git et Wamserver (ou équivalent) sont installés sur l'ordinateur.
+- Vérifier que Composer, Git et Wampserver (ou équivalent) sont installés sur l'ordinateur.
 - Télécharger le code et le dézipper dans www de Wampserver (ou dossier équivalent) puis renommer le dossier en "mediatekformation".<br>
 - Ouvrir une fenêtre de commandes en mode admin, se positionner dans le dossier du projet et taper "composer install" pour reconstituer le dossier vendor.<br>
 - Dans phpMyAdmin, se connecter à MySQL en root sans mot de passe et créer la BDD 'mediatekformation'.<br>
-- Récupérer le fichier mediatekformation.sql en racine du projet et l'utiliser pour remplir la BDD (si vous voulez mettre un login/pwd d'accès, il faut créer un utilisateur, lui donner les droits sur la BDD et il faut le préciser dans le fichier ".env" en racine du projet).<br>
+- Récupérer le fichier mediatekformation.sql en racine du projet et l'utiliser pour remplir la BDD.<br>
 - De préférence, ouvrir l'application dans un IDE professionnel. L'adresse pour la lancer est : http://localhost/mediatekformation/public/index.php<br>
+
+## Tests
+Les tests unitaires et fonctionnels sont disponibles dans le dossier `tests/`.<br>
+Pour les lancer : `php bin/phpunit tests/`<br>
+Résultat attendu : OK (16 tests, 21 assertions)
+
+## Informations de connexion au back office (pour les correcteurs)
+- **Login** : admin@admin.fr
+- **Mot de passe** : Admin1234
